@@ -72,6 +72,11 @@ public class AuthFilter implements Filter {
 
     protected void unauthenticated(HttpServletResponse httpResponse, ErrorCode errorCode) throws IOException {
         logger.debug("Unathorized with the message: ", errorCode.message);
+        if (errorCode == ErrorCode.INVALID_BASIC_AUTH_TOKEN || errorCode == ErrorCode.BAD_CREDENTIALS) {
+            httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, getErrorMessage(errorCode));
+            return;
+        }
+        
         StringTokenizer st = new StringTokenizer(supportedMethods, ";");
         while (st.hasMoreTokens()) {
             httpResponse.addHeader(Constant.AUTHENTICATE_HEADER, st.nextToken());
