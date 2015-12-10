@@ -4,10 +4,12 @@ import java.util.Arrays;
 
 public final class ToStringHelper {
 
-    private final StringBuilder sb = new StringBuilder();
+    private StringBuilder sb = new StringBuilder();
     
     private boolean notFirst;
     
+    private String result;
+
     public ToStringHelper(Object o) {
         sb.append("{");
     }
@@ -32,6 +34,10 @@ public final class ToStringHelper {
     
     @Override
     public String toString() {
-        return sb.toString();
+        if (result == null) {
+            result = sb.toString();
+            sb = null;
+        }
+        return result;
     }
 }

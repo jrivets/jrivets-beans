@@ -19,7 +19,7 @@
 		<servlet-api.version>2.5</servlet-api.version>
 		<spark.version>2.1</spark.version>
 		<testng.version>6.8.8</testng.version>
-		<ws-rs.version>1.1.1</ws-rs.version>
+		<ws-rs.version>2.0.1</ws-rs.version>
 	</properties>
 
 	<dependencies>
@@ -61,7 +61,7 @@
 
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
-			<artifactId>jsr311-api</artifactId>
+			<artifactId>javax.ws.rs-api</artifactId>
 			<version>${ws-rs.version}</version>
 		</dependency>
 
