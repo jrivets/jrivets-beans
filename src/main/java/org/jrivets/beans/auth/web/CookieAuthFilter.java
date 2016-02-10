@@ -53,28 +53,31 @@ public class CookieAuthFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        SecurityContextHolder.setContext(new SecurityContext()); //clear up context, cause it could come with other session in the thread local.
-
-        String cookie = CookieUtils.getCookie(httpRequest, cookieName);
-        UID sessionId = null;
-        if (cookie != null) {
-            sessionId = new UID(cookie);
-            Session session = sessionService.get(sessionId);
-            if (session != null) {
-                logger.debug("Found session by cookie: ", session);
-                SecurityContextHolder.getContext().setSession(session);
-            } else {
-                logger.debug("Unset cookie ", cookieName, "=", cookie, " , no session for it.");
+        SecurityContextHolder.setContext(new SecurityContext());
+        try {
+            String cookie = CookieUtils.getCookie(httpRequest, cookieName);
+            UID sessionId = null;
+            if (cookie != null) {
+                sessionId = new UID(cookie);
+                Session session = sessionService.get(sessionId);
+                if (session != null) {
+                    logger.debug("Found session by cookie: ", session);
+                    SecurityContextHolder.getContext().setSession(session);
+                } else {
+                    logger.debug("Unset cookie ", cookieName, "=", cookie, " , no session for it.");
+                    CookieUtils.deleteCookie(httpResponse, cookieName);
+                }
+            }
+            
+            chain.doFilter(request, response);
+            
+            if (sessionId != null && SecurityContextHolder.getContext().getSession() == null) {
+                logger.info("Catch unset session in the context, loging out");
+                sessionService.delete(sessionId);
                 CookieUtils.deleteCookie(httpResponse, cookieName);
             }
-        }
-        
-        chain.doFilter(request, response);
-        
-        if (sessionId != null && SecurityContextHolder.getContext().getSession() == null) {
-            logger.info("Catch unset session in the context, loging out");
-            sessionService.delete(sessionId);
-            CookieUtils.deleteCookie(httpResponse, cookieName);
+        } finally {
+            SecurityContextHolder.setContext(null);
         }
     }
 
