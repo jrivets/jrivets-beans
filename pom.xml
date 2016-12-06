@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jrivets</groupId>
 	<artifactId>jrivets-beans</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 
 	<properties>
 		<commons-codec.version>1.10</commons-codec.version>
@@ -13,7 +13,7 @@
 		<guava.version>18.0</guava.version>
 		<guice-servlet.version>4.0-beta5</guice-servlet.version>
 		<guice.version>4.0-beta5</guice.version>
-		<httpclient.version>4.2</httpclient.version>
+		<httpclient.version>4.5.2</httpclient.version>
 		<jrivets-common.version>0.0.3-SNAPSHOT</jrivets-common.version>
 		<kryo.version>3.0.0</kryo.version>
 		<servlet-api.version>2.5</servlet-api.version>
@@ -122,7 +122,7 @@
 					<target>1.8</target>
 					<compilerArgs>
 						<arg>-Xlint:all</arg>
-						<arg>-Werror</arg>
+						<!-- <arg>-Werror</arg> -->
 					</compilerArgs>
 				</configuration>
 			</plugin>

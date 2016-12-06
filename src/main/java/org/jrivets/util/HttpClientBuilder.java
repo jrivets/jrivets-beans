@@ -20,6 +20,7 @@ import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 
+@SuppressWarnings("deprecation")
 public final class HttpClientBuilder {
 
     private Integer socketReadTimeout;
